@@ -1,15 +1,16 @@
 {
   "files": {
-    "main.css": "/Movie-Search-App/static/css/main.82ea7240.css",
-    "main.js": "/Movie-Search-App/static/js/main.4198cdc0.js",
+    "main.css": "/Movie-Search-App/static/css/main.fb41cb26.css",
+    "main.js": "/Movie-Search-App/static/js/main.f9152019.js",
     "static/js/787.49616aef.chunk.js": "/Movie-Search-App/static/js/787.49616aef.chunk.js",
+    "static/media/House.svg": "/Movie-Search-App/static/media/House.2d4cc753762bf9edb86603a9c81b9654.svg",
     "index.html": "/Movie-Search-App/index.html",
-    "main.82ea7240.css.map": "/Movie-Search-App/static/css/main.82ea7240.css.map",
-    "main.4198cdc0.js.map": "/Movie-Search-App/static/js/main.4198cdc0.js.map",
+    "main.fb41cb26.css.map": "/Movie-Search-App/static/css/main.fb41cb26.css.map",
+    "main.f9152019.js.map": "/Movie-Search-App/static/js/main.f9152019.js.map",
     "787.49616aef.chunk.js.map": "/Movie-Search-App/static/js/787.49616aef.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.82ea7240.css",
-    "static/js/main.4198cdc0.js"
+    "static/css/main.fb41cb26.css",
+    "static/js/main.f9152019.js"
   ]
 }
