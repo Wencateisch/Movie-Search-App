@@ -8,7 +8,6 @@ const BASE_URL = 'https://api.themoviedb.org/3';
 
 function App() {
   const [movies, setMovies] = useState([]);
-  const [featuredMovies, setFeaturedMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -32,7 +31,6 @@ function App() {
         setMovies(data.results || []);
         setSearchPerformed(true);
       } else {
-        setFeaturedMovies(data.results || []);
         setMovies(data.results || []);
         setSearchPerformed(false);
       }
@@ -63,7 +61,7 @@ function App() {
       return;
     }
 
-    const searchApiUrl = `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(searchTerm)}&page=1`;
+    const searchApiUrl = `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(searchTerm)}&page=1&include_adult=false`;
     await fetchMovies(searchApiUrl, true);
   };
 
@@ -80,6 +78,13 @@ function App() {
     await fetchMovies(featuredApiUrl);
   };
 
+  // Handle key press on Enter
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSubmit(e);
+    }
+  };
+
   return (
     <div className="app-container">
       <header className="header">
@@ -87,13 +92,14 @@ function App() {
       </header>
 
       <div className="search-container">
-        <form onSubmit={handleSubmit} className="search-form">
+        <form onSubmit={handleSubmit} className="search-form" role="search">
           <input
             type="search"
             className="search-input"
             placeholder="Search for movies..."
             value={searchTerm}
             onChange={handleInputChange}
+            onKeyPress={handleKeyPress}
             aria-label="Search movies"
           />
           {searchTerm && (
@@ -106,20 +112,31 @@ function App() {
               ✕
             </button>
           )}
-          <button type="submit" className="search-btn">🔍</button>
+          <button type="submit" className="search-btn" aria-label="Search">
+            🔍
+          </button>
         </form>
+
+        {searchPerformed && (
+          <div className="search-info" role="status">
+            Found {movies.length} result{movies.length !== 1 ? 's' : ''} for "{searchTerm}"
+          </div>
+        )}
       </div>
 
       {loading && (
-        <div className="loading">
+        <div className="loading" role="status">
           <span>Loading</span>
         </div>
       )}
 
       {error && (
-        <div className="error-message">
+        <div className="error-message" role="alert">
           <p>⚠️ {error}</p>
-          <button onClick={() => fetchMovies(`${BASE_URL}/discover/movie?sort_by=popularity.desc&page=1&api_key=${API_KEY}`)} className="retry-btn">
+          <button
+            onClick={() => fetchMovies(`${BASE_URL}/discover/movie?sort_by=popularity.desc&page=1&api_key=${API_KEY}`)}
+            className="retry-btn"
+          >
             Try Again
           </button>
         </div>
@@ -140,7 +157,7 @@ function App() {
       )}
 
       {!loading && !error && movies.length > 0 && (
-        <div className="movie-container">
+        <div className="movie-container" role="list">
           {movies.map((movie) => (
             <Movie
               key={movie.id}
@@ -148,14 +165,11 @@ function App() {
               poster_path={movie.poster_path}
               overview={movie.overview}
               vote_average={movie.vote_average}
+              release_date={movie.release_date}
+              popularity={movie.popularity}
+              role="listitem"
             />
           ))}
-        </div>
-      )}
-
-      {!loading && !error && searchPerformed && movies.length > 0 && (
-        <div className="results-info">
-          <p>Showing {movies.length} result{movies.length !== 1 ? 's' : ''} for "{searchTerm}"</p>
         </div>
       )}
     </div>

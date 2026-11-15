@@ -1,0 +1,6 @@
+{
+  "appId": "com.wencateisch.moviesearch",
+  "appName": "Movie Search App",
+  "webDir": "build",
+  "bundledWebRuntime": false
+}
